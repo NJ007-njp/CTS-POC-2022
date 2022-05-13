@@ -4,6 +4,7 @@ import * as axiosApi from 'axios';
 const axios = axiosApi.default;
 
 function* validateUser(param) {
+   console.log(param);
     try {
     //    const user = yield call(Api.fetchUser, action.payload.userId);
     //    yield put({type: "USER_FETCH_SUCCEEDED", user: user});
