@@ -5,7 +5,7 @@ import * as action from './login.action';
 import './login.css';
 const Login = (props)=>{
     const [password, setPassword] = useState('');
-   // const [password, setPassword] = useState('');
+    const [confirmpassword, setConfirmPassword] = useState('');
     const [userName, setUserName] = useState('');
     const [signUp,setSignUp] = useState(false);
     useEffect(()=>{
@@ -16,26 +16,31 @@ const Login = (props)=>{
       props.initiateLogin({userName: userName,password: password});
     }
     const trySignUp = ()=>{
-      props.initiateSignUp({userName: userName,password: password});
-      setUserName('');
-      setPassword('');
+      if(confirmpassword === password && userName){
+        props.initiateSignUp({userName: userName,password: password});
+        setUserName('');
+        setPassword('');
+      }
+      else
+      window.alert('password mismatch');
     }
     return (
       <>
        {!signUp?
         (<div className="login-container">
             <div>Login</div>
-            <div>Username: <input type="text" onChange={(e)=>{setUserName(e.target.value)}}/></div>
-            <div>Password: <input type="password" onChange={(e)=>{setPassword(e.target.value)}}/></div>
-            <div><button onClick={tryLogin}>Submit</button></div>
-            <div><button onClick={()=>{setSignUp(true)}}>SignUp</button></div>
+            <div>Username: <input type="text" value={userName} onChange={(e)=>{setUserName(e.target.value)}}/></div>
+            <div>Password: <input type="password" value={password} onChange={(e)=>{setPassword(e.target.value)}}/></div>
+            <div><button onClick={tryLogin}>Submit</button><button onClick={()=>{setSignUp(true)}}>SignUp</button></div>
         </div>):(
-          <div className="signup-container">
+          <div className="login-container">
           <div>Sign Up</div>
-          <div>User Name: <input type="text" onChange={(e)=>{setUserName(e.target.value)}}/></div>
-          <div>Password: <input type="password" onChange={(e)=>{setPassword(e.target.value)}}/></div>
-          <div>Confirm Password: <input type="password" onChange={(e)=>{setPassword(e.target.value)}}/></div>
-          <div><button onClick={trySignUp}>Submit</button></div>
+          <div>User Name: <input type="text" value={userName} onChange={(e)=>{setUserName(e.target.value)}}/></div>
+          <div>Password: <input type="password" value={password} onChange={(e)=>{setPassword(e.target.value)}}/></div>
+          <div>Confirm Password: <input type="password" onChange={(e)=>{setConfirmPassword(e.target.value)}}/></div>
+          <div><button onClick={trySignUp}>Submit</button><button onClick={()=>{
+            setSignUp(false);setUserName('');setPassword('')}
+          }>go back</button></div>
       </div>
         )}
       </>

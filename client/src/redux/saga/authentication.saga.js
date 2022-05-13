@@ -3,15 +3,20 @@ import * as axiosApi from 'axios';
 
 const axios = axiosApi.default;
 
-function* validateUser(param) {
+export function* validateUser(param) {
    console.log(param);
     try {
-    //    const user = yield call(Api.fetchUser, action.payload.userId);
-    //    yield put({type: "USER_FETCH_SUCCEEDED", user: user});
-    axios.post('http://localhost:3001',{param}).then().catch();
+      axios.post('http://localhost:4000/login',{param}).then().catch();
     } catch (e) {
        yield put({type: "USER_FETCH_FAILED", message: e.message});
     }
  }
 
- export default validateUser;
+ export function* signUpUser(param) {
+   console.log(param);
+    try {
+      axios.post('http://localhost:4000/signup',{param}).then().catch();
+    } catch (e) {
+       yield put({type: "USER_FETCH_FAILED", message: e.message});
+    }
+ }
